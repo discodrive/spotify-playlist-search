@@ -1,16 +1,16 @@
+import argparse
 import os
 import spotipy
 import subprocess
-from os import popen
 from spotipy.oauth2 import SpotifyClientCredentials
 
-SPOTIFY_CLIENT_ID=os.getenv("SPOTIFY_CLIENT_ID")
-SPOTIFY_CLIENT_SECRET=os.getenv("SPOTIFY_CLIENT_SECRET")
-
 sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(
-    client_id=SPOTIFY_CLIENT_ID, 
-    client_secret=SPOTIFY_CLIENT_SECRET
+    client_id=os.getenv("SPOTIFY_CLIENT_ID"), 
+    client_secret=os.getenv("SPOTIFY_CLIENT_SECRET")
 ))
+
+username = input("Enter spotify username: ")
+list = []
 
 def playlists(user):
     if user:
@@ -20,11 +20,9 @@ def playlists(user):
         
 playlists.__doc__ = "Return all public playlists from a specified user"
 
-list = []
-
-for item in playlists("stayglued")["items"]:
-    list.append(item['name'])
-
-
-# TEST=popen(f"gum input --placeholder 'test'")
-# print(TEST)
+if username:
+    for item in playlists(username)["items"]:
+        list.append(item['name'])
+    print(list)
+else:
+    print("Not a valid username")

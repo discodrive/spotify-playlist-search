@@ -1,2 +1,0 @@
-Pipfile
-read /dev/tty: input/output error
