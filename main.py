@@ -3,6 +3,7 @@ import os
 import spotipy
 import subprocess
 from spotipy.oauth2 import SpotifyClientCredentials
+from iterfzf import iterfzf
 
 sp = spotipy.Spotify(client_credentials_manager=SpotifyClientCredentials(
     client_id=os.getenv("SPOTIFY_CLIENT_ID"), 
@@ -14,7 +15,8 @@ list = []
 
 def playlists(user):
     if user:
-        return sp.user_playlists(user)
+        offset = 0
+        return sp.user_playlists(user,limit=50,offset=offset)
     else:
         return "null"
         
@@ -23,6 +25,6 @@ playlists.__doc__ = "Return all public playlists from a specified user"
 if username:
     for item in playlists(username)["items"]:
         list.append(item['name'])
-    print(list)
+    iterfzf(list)
 else:
     print("Not a valid username")

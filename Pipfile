@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 requests = "*"
 spotipy = "*"
+iterfzf = "*"
 
 [dev-packages]
 
